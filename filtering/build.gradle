@@ -24,6 +24,15 @@ repositories {
 }
 
 dependencies {
+	//csv 읽게 도와주는 의존성
+	implementation 'org.apache.commons:commons-csv:1.8'
+
+	//jdbc 드라이버 연결 의존성
+	implementation 'com.mysql:mysql-connector-j:8.2.0'
+
+	//csv 여러개 입력 도와주는 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-batch'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -35,8 +44,11 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+	systemProperty "spring.profiles.active", "test"
 }
