@@ -1,13 +1,13 @@
-package com.example.filtering.csvread;
+package com.example.filtering.csvread.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseUtil {
-    private static final String JDBC_URL = System.getenv("DATABASE_URL");
-    private static final String USER = System.getenv("DATABASE_USERNAME");
-    private static final String PASSWORD = System.getenv("DATABASE_PASSWORD");
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/shop";
+    private static final String USER = "root";
+    private static final String PASSWORD = "0000";
 
     static {
         try{
