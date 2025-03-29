@@ -7,5 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ScoreRepository extends JpaRepository<Score, Long> {
-    List<Score> findByScore(Long score);
+    //전체 평가 회사명에 따라 상위 10개만 조회
+    List<Score> findTop10ByScoreOrderByCompanyNameAsc(Long score);
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public class ScoreController {
     private final ScoreService scoreService;
 
-    @GetMapping("/stores/total-scores") //3점인 얘들만 조회
+    @GetMapping("/stores/total-scores")
     public List<ScoreResponseDto> getFilterScores(@RequestParam(required = false, name = "score") Integer score) {
 
         if (score != null) {

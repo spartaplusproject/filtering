@@ -17,7 +17,7 @@ public class ScoreService {
 
     @Transactional(readOnly = true)
     public List<ScoreResponseDto> getScoresByValue(int score) {
-        List<Score> filterScore =  scoreRepository.findByScore(Long.valueOf(score));
+        List<Score> filterScore =  scoreRepository.findTop10ByScoreOrderByCompanyNameAsc(Long.valueOf(score));
 
         List<ScoreResponseDto> dtos = new ArrayList<>();
         for (Score OneScore : filterScore) {
