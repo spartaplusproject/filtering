@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class EachDataInserter {
+public class BatchDataInserter {
     public static void insertFromCsv() {
         String createTableQuery = """
             CREATE TABLE IF NOT EXISTS seoul_internet_shopping_mall_status (
@@ -27,33 +27,45 @@ public class EachDataInserter {
             );
         """;
 
-        String insertQuery = "INSERT INTO seoul_internet_shopping_mall_status(shop_name, all_rating, shop_status, monitoring_day, email) VALUES (?, ?, ?, ?, ?)";
+        String insertQuery = """
+            INSERT INTO seoul_internet_shopping_mall_status 
+            (shop_name, all_rating, shop_status, monitoring_day, email) 
+            VALUES (?, ?, ?, ?, ?)
+        """;
 
-        try (Connection connection = DatabaseUtil.getConnection();
-             Statement tableStatement = connection.createStatement();
-             Reader in = new FileReader("seoul_internet_shopping_mall_status.csv");
-             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)
+        try (
+                Connection connection = DatabaseUtil.getConnection();
+                Statement tableStatement = connection.createStatement();
+                Reader in = new FileReader("seoul_internet_shopping_mall_status.csv");
+                PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)
         ) {
             tableStatement.execute(createTableQuery);
 
             Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader().parse(in);
             connection.setAutoCommit(false);
 
-            try {
-                for (CSVRecord record : records) {
-                    preparedStatement.setString(1, getSafe(record, "shop_name"));
-                    preparedStatement.setInt(2, parseIntSafe(record, "all_rating"));
-                    preparedStatement.setString(3, getSafe(record, "shop_status"));
-                    preparedStatement.setDate(4, parseDateSafe(record, "monitoring_day"));
-                    preparedStatement.setString(5, getSafe(record, "email"));
+            int batchSize = 100;
+            int count = 0;
 
-                    preparedStatement.addBatch();
+            for (CSVRecord record : records) {
+                preparedStatement.setString(1, getSafe(record, "shop_name"));
+                preparedStatement.setInt(2, parseIntSafe(record, "all_rating"));
+                preparedStatement.setString(3, getSafe(record, "shop_status"));
+                preparedStatement.setDate(4, parseDateSafe(record, "monitoring_day"));
+                preparedStatement.setString(5, getSafe(record, "email"));
+
+                preparedStatement.addBatch();
+                count++;
+
+                if (count % batchSize == 0) {
                     preparedStatement.executeBatch();
                     connection.commit();
                 }
-            } catch (Exception e) {
-                connection.rollback();
-                e.printStackTrace();
+            }
+
+            if (count % batchSize != 0) {
+                preparedStatement.executeBatch();
+                connection.commit();
             }
 
         } catch (Exception e) {
