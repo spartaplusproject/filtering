@@ -21,7 +21,7 @@ CREATE TABLE seoul_internet_shopping_mall_status
     initial_required_item               TEXT NULL,
     payment_method                      TEXT NULL,
     degree_of_compliance_terms_of_use   TEXT NULL,
-    handling_personal_information       TEXT NULL,
+    `handling_personal_information`    TEXT NULL,
     requires_information_above_standard TEXT NULL,
     buying_security_service             TEXT NULL,
     secure_server_installation          TEXT NULL,
