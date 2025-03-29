@@ -23,11 +23,16 @@ public class EachDataInserter {
                 all_rating INT NULL,
                 shop_status TEXT NULL,
                 monitoring_day DATE NULL,
-                email TEXT NULL
+                email TEXT NULL,
+                company_name TEXT NULL
             );
         """;
 
-        String insertQuery = "INSERT INTO seoul_internet_shopping_mall_status(shop_name, all_rating, shop_status, monitoring_day, email) VALUES (?, ?, ?, ?, ?)";
+        String insertQuery = """
+            INSERT INTO seoul_internet_shopping_mall_status 
+            (shop_name, all_rating, shop_status, monitoring_day, email, company_name)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """;
 
         try (Connection connection = DatabaseUtil.getConnection();
              Statement tableStatement = connection.createStatement();
@@ -46,9 +51,9 @@ public class EachDataInserter {
                     preparedStatement.setString(3, getSafe(record, "shop_status"));
                     preparedStatement.setDate(4, parseDateSafe(record, "monitoring_day"));
                     preparedStatement.setString(5, getSafe(record, "email"));
+                    preparedStatement.setString(6, getSafe(record, "company_name"));
 
-                    preparedStatement.addBatch();
-                    preparedStatement.executeBatch();
+                    preparedStatement.executeUpdate();
                     connection.commit();
                 }
             } catch (Exception e) {
