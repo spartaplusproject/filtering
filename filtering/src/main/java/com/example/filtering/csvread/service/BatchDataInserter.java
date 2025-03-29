@@ -15,22 +15,24 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 public class BatchDataInserter {
+
     public static void insertFromCsv() {
         String createTableQuery = """
             CREATE TABLE IF NOT EXISTS seoul_internet_shopping_mall_status (
                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                shop_name TEXT NULL,
-                all_rating INT NULL,
-                shop_status TEXT NULL,
-                monitoring_day DATE NULL,
-                email TEXT NULL
+                shop_name TEXT,
+                all_rating INT,
+                shop_status TEXT,
+                monitoring_day DATE,
+                email TEXT,
+                company_name TEXT
             );
         """;
 
         String insertQuery = """
-            INSERT INTO seoul_internet_shopping_mall_status 
-            (shop_name, all_rating, shop_status, monitoring_day, email) 
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO seoul_internet_shopping_mall_status
+            (shop_name, all_rating, shop_status, monitoring_day, email, company_name)
+            VALUES (?, ?, ?, ?, ?, ?)
         """;
 
         try (
@@ -53,6 +55,7 @@ public class BatchDataInserter {
                 preparedStatement.setString(3, getSafe(record, "shop_status"));
                 preparedStatement.setDate(4, parseDateSafe(record, "monitoring_day"));
                 preparedStatement.setString(5, getSafe(record, "email"));
+                preparedStatement.setString(6, getSafe(record, "company_name"));
 
                 preparedStatement.addBatch();
                 count++;
@@ -74,9 +77,12 @@ public class BatchDataInserter {
     }
 
     private static int parseIntSafe(CSVRecord record, String key) {
-        if (!record.isMapped(key)) return 0;
-        String value = record.get(key);
-        return (value != null && !value.isBlank()) ? Integer.parseInt(value) : 0;
+        try {
+            String value = record.get(key);
+            return (value != null && !value.isBlank()) ? Integer.parseInt(value) : 0;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     private static String getSafe(CSVRecord record, String key) {
