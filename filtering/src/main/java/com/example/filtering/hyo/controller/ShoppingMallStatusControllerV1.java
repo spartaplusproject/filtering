@@ -48,4 +48,13 @@ public class ShoppingMallStatusControllerV1 {
             @RequestParam(defaultValue = "10") int size) {
         return shopService.getFilteredShops(allRating, shopStatus, page, size);
     }
+
+    //--------심화 구현 기능--------
+    @GetMapping("/query-filtered")
+    public List<ShoppingMallStatus> getFilteredShops(
+            @RequestParam(name = "lastId", required = false) Long lastId,
+            @RequestParam(name = "allRating",defaultValue = "0") int allRating,
+            @RequestParam(name = "shopStatus") String shopStatus) {
+        return shopService.getFilteredShops(lastId, allRating, shopStatus);
+    }
 }

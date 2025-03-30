@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,11 +22,13 @@ public class ShoppingMallStatus {
     @Column(name = "shop_status")
     private String shopStatus;
     @Column(name = "monitoring_day")
-    private LocalDateTime monitoringDay;
+    private LocalDate monitoringDay;
     @Column(name = "email")
     private String email;
+    @Column(name = "company_name")
+    private String companyName;
 
-    public ShoppingMallStatus(String shopName, int allRating, String shopStatus, LocalDateTime monitoringDay) {
+    public ShoppingMallStatus(String shopName, int allRating, String shopStatus, LocalDate monitoringDay) {
         this.shopName = shopName;
         this.allRating = allRating;
         this.shopStatus = shopStatus;
