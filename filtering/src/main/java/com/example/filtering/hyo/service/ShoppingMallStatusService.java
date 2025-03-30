@@ -2,6 +2,7 @@ package com.example.filtering.hyo.service;
 
 import com.example.filtering.hyo.entity.ShoppingMallStatus;
 import com.example.filtering.hyo.repository.ShoppingMallStatusRepository;
+import com.example.filtering.hyo.repository.query.ShoppingMallStatusRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,7 @@ import java.util.List;
 public class ShoppingMallStatusService {
 
     private final ShoppingMallStatusRepository shopRepository;
+    private final ShoppingMallStatusRepositoryCustom queryRepository;
 
     // 전체평가 내림차순 조회
     public List<ShoppingMallStatus> findShopByAllRating(int allRating) {
@@ -35,6 +37,12 @@ public class ShoppingMallStatusService {
 
     public Page<ShoppingMallStatus> getFilteredShops(int allRating, String shopStatus, int page, int size) {
         return shopRepository.findByAllRatingAndShopStatus(allRating, shopStatus, PageRequest.of(page, size));
+    }
+
+    //QueryDsl 사용 조회
+    public List<ShoppingMallStatus> getFilteredShops(Long lastId, int rating, String status) {
+        int limit = 10;
+        return queryRepository.findShopWithCursor(lastId, rating, status, limit);
     }
 
 }
