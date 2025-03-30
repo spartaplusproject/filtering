@@ -25,6 +25,8 @@ public class ShoppingMallStatus {
     private LocalDate monitoringDay;
     @Column(name = "email")
     private String email;
+    @Column(name = "company_name")
+    private String companyName;
 
     public ShoppingMallStatus(String shopName, int allRating, String shopStatus, LocalDate monitoringDay) {
         this.shopName = shopName;
