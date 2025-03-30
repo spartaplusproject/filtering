@@ -82,6 +82,21 @@ IntelliJ Ultimate
 
 <details>
   <summary>반효승 트러블 슈팅</summary>
-  
+  1. PostMan에서는 200OK 뜨는데 응답값은 [] 빈 배열
+
+Mysql에 있는 데이터를 조회하는데 application.properties에는 h2로 설정하니까
+명령어가 일치하지 않아서 발생함.
+
+2. Mysql드라이버 설정
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver 인식 오류
+분명히 application.properties와 build.gradle에 오타없이 잘 설정해줬는데도 인식이 안됐음.
+
+implementation 'mysql:mysql-connector-java'
+이렇게 돼 있는 걸 뒤에 8.0.33으로 버전까지 명시해주니까 그제서야 라이브러리에 생김.
+
+3. 팀원과의 git 사용
+과제 요구사항 만들기만 해도 버거웠던 터라 git을 사용할 줄 아예 몰랐는데
+팀원 분들의 도움을 받아 잘 마무리 했지만 따로 공부를 해야할 필요성을 절실히 느낌.
 </details>
 
