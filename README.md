@@ -7,7 +7,7 @@
 2. 성능 최적화 성공하기
 
 ## 기능
-IntelliJ Ultimate 또는 DBeaver를 사용하여 CSV 파일을 database 테이블에 입력하기
+#### IntelliJ Ultimate 또는 DBeaver를 사용하여 CSV 파일을 database 테이블에 입력하기
 - IntelliJ Ultimate 사용해서 csv 파일로 데이터베이스 테이블을 생성합니다.
 
 <details>
@@ -22,22 +22,22 @@ IntelliJ Ultimate 또는 DBeaver를 사용하여 CSV 파일을 database 테이�
 
 </details>
 
-업체 리스트 조회 중 필터 기능
+#### 업체 리스트 조회 중 필터 기능
 - ‘전체평가’ 필터 조회와 ‘업소상태’ 필터 조회(2개 필터 동시 적용, 각각 1개씩 적용) 상위 10개 리스트 보여주기를 만들었습니다.
 
-Pageable 기반 업체 리스트 조회 
+#### Pageable 기반 업체 리스트 조회 
 - ‘전체평가’ 필터 조회와 ‘업소상태’ 필터 조회(2개 필터 동시 적용) 10개씩 리스트를 보여주는 API 를 만들었습니다.
   
-csv를 database에 입력하는 코드 만들기
+#### csv를 database에 입력하는 코드 만들기
 - /collection 라는 API 를 통해 서버 내 특정 위치의 csv 파일을 1개 행씩 읽어서 Database에 차례대로 insert 하는 로직을 구현했습니다
 
-QueryDSL 을 사용한 커서 기반 페이지네이션 및 필터
+#### QueryDSL 을 사용한 커서 기반 페이지네이션 및 필터
 - 커서 기반 페이지네이션을 적용해 ‘전체평가’ 필터 조회와 ‘업소상태’ 필터 조회(2개 필터 동시 적용) 10개씩 리스트 보여주는 API를 만들었습니다.
 
-csv를 database에 입력하는 코드 개선하기
+#### csv를 database에 입력하는 코드 개선하기
 - 100개씩 읽어서 Database에 insert하는 로직으로 개선했습니다. 실행시간이 약 1분정도 더 줄었습니다.
 
-csv를 database에 입력하는 코드 더 개선하기 ( 도전기능 최적화(Indexing) )
+#### csv를 database에 입력하는 코드 더 개선하기 ( 도전기능 최적화(Indexing) )
 - 100개에서 500개씩 읽어서 Database에insert 하는 로직으로 개선했습니다. 실행시간이 약 2초정도 더 줄었습니다.
 
 <details>
