@@ -38,4 +38,5 @@ public class ShoppingMallStatus {
     public ShoppingMallStatus(String email) {
         this.email = email;
     }
+
 }
