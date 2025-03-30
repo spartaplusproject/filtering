@@ -1,6 +1,7 @@
 package com.example.filtering.csvread.controller;
 
 import com.example.filtering.csvread.service.BatchDataInserter;
+import com.example.filtering.csvread.service.BetterBatchInserter;
 import com.example.filtering.csvread.service.EachDataInserter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,15 @@ public class CsvReadController {
         BatchDataInserter.insertFromCsv();
         Map<String, String> message = new HashMap<>();
         message.put("message","데이터 100개씩 삽입 완료");
+        return new ResponseEntity<>(message,HttpStatus.CREATED);
+    }
+
+    @PostMapping("/api/v3/collection")
+    public ResponseEntity<Map<String, String>> BetterBatchDateInsert() throws ClassNotFoundException{
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        BetterBatchInserter.insertFromCsv();
+        Map<String, String> message = new HashMap<>();
+        message.put("message","데이터 500개씩 삽입 완료");
         return new ResponseEntity<>(message,HttpStatus.CREATED);
     }
 }
